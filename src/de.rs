@@ -159,7 +159,9 @@ impl<'de> Iterator for PartIterator<'de> {
     type Item = (Part<'de>, Part<'de>);
 
     fn next(&mut self) -> Option<Self::Item> {
-        self.0.next().map(|(k, v)| (Part(k), Part(v)))
+        self.0
+            .find(|(_, v)| !v.is_empty())
+            .map(|(k, v)| (Part(k), Part(v)))
     }
 }
 
